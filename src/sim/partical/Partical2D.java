@@ -15,12 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim;
+package sim.partical;
+
+import sim.Position;
 
 /**
  *
  * @author Kareem Horstink
  */
-public class Partical3D extends Partical{
+public class Partical2D extends Partical{
+
+    @Override
+    public void setPredicted() {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Position getPredicted() {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+    }
+
+    
     
 }

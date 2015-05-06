@@ -18,9 +18,50 @@
 package sim;
 
 /**
+ * Holds all the information that the simulation will contain
  *
  * @author Kareem Horstink
+ * @version 0.2
  */
 public class GlobalSetting {
-    
+
+    private static Double deltaT;
+    private static double gravity = -9.8;
+
+    /**
+     * Get the value of deltaT
+     *
+     * @return the value of deltaT
+     */
+    public static Double getDeltaT() {
+        return deltaT;
+    }
+
+    /**
+     * Set the value of deltaT
+     *
+     * @param deltaT new value of deltaT
+     */
+    public static void setDeltaT(Double deltaT) {
+        GlobalSetting.deltaT = deltaT;
+    }
+
+    /**
+     * Get the value of gravity
+     *
+     * @return the value of gravity
+     */
+    public static double getGravity() {
+        return gravity;
+    }
+
+    /**
+     * Set the value of gravity
+     *
+     * @param gravity new value of gravity
+     */
+    protected static void setGravity(double gravity) {
+        GlobalSetting.gravity = gravity;
+    }
+
 }

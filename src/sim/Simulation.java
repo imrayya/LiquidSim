@@ -17,10 +17,100 @@
  */
 package sim;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Observable;
+import java.util.Timer;
+import sim.partical.Partical;
+
 /**
  *
  * @author Kareem Horstink
+ * @version 0.1
  */
-public class Simulation {
-    
+public class Simulation extends Observable {
+
+    private final ParticalHolder CONTAINER;
+    private boolean pause = false;
+    private final Timer TIMER;
+
+    public Simulation() {
+        this.CONTAINER = null;
+        this.TIMER = null;
+    }
+
+    private void simulationLoop() {
+        Iterator<Partical> i = CONTAINER.getIterator();
+        while (!pause) {
+            //Sets the predicted location based on previous tick
+            while (i.hasNext()) {
+                Partical next = i.next();
+                next.setForce(next.getExternalForce().multi(GlobalSetting.getDeltaT()));
+                next.setPredicted();
+            }
+
+            //finds the neighbors
+            i = CONTAINER.getIterator();
+            while (i.hasNext()) {
+                Partical next = i.next();
+                next.setNeighbors(findNeibours(next));
+            }
+            
+            
+            i = CONTAINER.getIterator();
+            while (i.hasNext()) {
+                Partical next = i.next();
+                next.setNeighbors(findNeibours(next));
+            }
+        }
+    }
+
+    protected List<Partical> findNeibours(Partical p) {
+        return null;
+    }
+
+    /**
+     * Get the value of pause
+     *
+     * @return the value of pause
+     */
+    public boolean isPause() {
+        return pause;
+    }
+
+    /**
+     * Set the value of pause
+     *
+     * @param pause new value of pause
+     */
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
 }
+//http://mmacklin.com/pbf_sig_preprint.pdf
+// 1: for all particles i do
+//    2: apply forces vi ⇐ vi +∆tfext(xi)
+//    3: predict position x∗i ⇐ xi +∆tvi
+// 4: end for
+// 5: for all particles i do
+//    6: find neighboring particles Ni(x∗i)
+// 7: end for
+// 8: while iter < solverIterations do
+//    9: for all particles i do
+//       10: calculate λi
+//    11: end for
+//    12: for all particles i do
+//       13: calculate ∆pi
+//       14: perform collision detection and response
+//    15: end for
+//    16: for all particles i do
+//        17: update position x∗i ⇐ x∗i +∆pi
+//    18: end for
+// 19: end while
+// 20: for all particles i do
+//    21: update velocity vi ⇐ 1/∆t x∗i −xi
+//    22: apply vorticity confinement and XSPH viscosity
+//    23: update position xi ⇐ x∗i
+// 24: end for
+

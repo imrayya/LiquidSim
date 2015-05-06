@@ -20,7 +20,56 @@ package sim;
 /**
  *
  * @author Kareem Horstink
+ * @version 0.1
  */
-public abstract class Partical {
-    
+public class Position {
+
+
+    private double x;
+    private double y;
+
+    public Position() {
+    }
+
+    public Position(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Get the value of x
+     *
+     * @return the value of x
+     */
+    public double getX() {
+        return x;
+    }
+
+    /**
+     * Set the value of x
+     *
+     * @param x new value of x
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    /**
+     * Get the value of y
+     *
+     * @return the value of y
+     */
+    public double getY() {
+        return y;
+    }
+
+    /**
+     * Set the value of y
+     *
+     * @param y new value of y
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
+
 }
