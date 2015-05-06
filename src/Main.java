@@ -3,6 +3,7 @@
  * Runs the rest of the project
  *
  * @author Kareem Horstink
+ * @version 0.1
  */
 public class Main {
 
