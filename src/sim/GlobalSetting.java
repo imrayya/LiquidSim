@@ -25,7 +25,7 @@ package sim;
  */
 public class GlobalSetting {
 
-    private static Double deltaT;
+    private static Long deltaT = 100l;
     private static double gravity = -9.8;
 
     /**
@@ -33,7 +33,7 @@ public class GlobalSetting {
      *
      * @return the value of deltaT
      */
-    public static Double getDeltaT() {
+    public static Long getDeltaT() {
         return deltaT;
     }
 
@@ -42,7 +42,7 @@ public class GlobalSetting {
      *
      * @param deltaT new value of deltaT
      */
-    public static void setDeltaT(Double deltaT) {
+    public static void setDeltaT(Long deltaT) {
         GlobalSetting.deltaT = deltaT;
     }
 

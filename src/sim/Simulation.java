@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
+import java.util.TimerTask;
 import sim.partical.Partical;
 
 /**
@@ -35,8 +36,15 @@ public class Simulation extends Observable {
     private final Timer TIMER;
 
     public Simulation() {
-        this.CONTAINER = null;
-        this.TIMER = null;
+        this.CONTAINER = new ParticalHolder();
+        this.TIMER = new Timer();
+        TIMER.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                simulationLoop();
+            }
+        }, 0, GlobalSetting.getDeltaT());
     }
 
     private void simulationLoop() {

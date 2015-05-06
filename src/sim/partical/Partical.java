@@ -31,7 +31,11 @@ public abstract class Partical {
 
     private double density = 1;
 
-    private double temperature;
+    private double temperature = 297.15;
+
+    private double boilingPoint = 373.15;
+
+    private double freezingPoint = 273.15;
 
     private Force force;
 
@@ -42,6 +46,42 @@ public abstract class Partical {
     public abstract void setPredicted();
 
     public abstract Position getPredicted();
+
+    /**
+     * Get the value of boilingPoint
+     *
+     * @return the value of boilingPoint
+     */
+    public double getBoilingPoint() {
+        return boilingPoint;
+    }
+
+    /**
+     * Set the value of boilingPoint
+     *
+     * @param boilingPoint new value of boilingPoint
+     */
+    public void setBoilingPoint(double boilingPoint) {
+        this.boilingPoint = boilingPoint;
+    }
+
+    /**
+     * Get the value of freezingPoint
+     *
+     * @return the value of freezingPoint
+     */
+    public double getFreezingPoint() {
+        return freezingPoint;
+    }
+
+    /**
+     * Set the value of freezingPoint
+     *
+     * @param freezingPoint new value of freezingPoint
+     */
+    public void setFreezingPoint(double freezingPoint) {
+        this.freezingPoint = freezingPoint;
+    }
 
     /**
      * Get the value of neighbors
