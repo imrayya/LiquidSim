@@ -18,7 +18,7 @@
 package sim.partical;
 
 import java.util.List;
-import sim.Position;
+import sim.position.Position;
 import sim.force.Force;
 
 /**
@@ -26,6 +26,8 @@ import sim.force.Force;
  * @author Kareem Horstink
  */
 public abstract class Partical {
+
+    private boolean kill = false;
 
     private double mass = 1;
 
@@ -37,6 +39,10 @@ public abstract class Partical {
 
     private double freezingPoint = 273.15;
 
+    private Position position;
+
+    private Position predictedPosition;
+
     private Force force;
 
     private Force externalForce;
@@ -45,7 +51,49 @@ public abstract class Partical {
 
     public abstract void setPredicted();
 
-    public abstract Position getPredicted();
+    /**
+     * Get the value of kill
+     *
+     * @return the value of kill
+     */
+    public boolean isKill() {
+        return kill;
+    }
+
+    /**
+     * Set the value of kill
+     *
+     * @param kill new value of kill
+     */
+    public void setKill(boolean kill) {
+        this.kill = kill;
+    }
+
+    protected void setPredicted(Position p) {
+        predictedPosition = p;
+    }
+
+    public Position getPredicted() {
+        return predictedPosition;
+    }
+
+    /**
+     * Get the value of position
+     *
+     * @return the value of position
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    /**
+     * Set the value of position
+     *
+     * @param position new value of position
+     */
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
     /**
      * Get the value of boilingPoint

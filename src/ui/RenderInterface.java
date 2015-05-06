@@ -25,5 +25,6 @@ import java.awt.Graphics2D;
  * @version 0.1
  */
 public interface RenderInterface {
+
     public void render(Graphics2D g);
 }

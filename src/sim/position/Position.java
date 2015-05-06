@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim;
+package sim.position;
 
 /**
  *
@@ -24,11 +24,12 @@ package sim;
  */
 public class Position {
 
-
     private double x;
     private double y;
 
     public Position() {
+        x = 0;
+        y = 0;
     }
 
     public Position(double x, double y) {
@@ -70,6 +71,11 @@ public class Position {
      */
     public void setY(double y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "Position - "+"x: " + x + "; y: " + y;
     }
 
 }

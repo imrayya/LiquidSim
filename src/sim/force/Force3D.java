@@ -21,12 +21,16 @@ package sim.force;
  *
  * @author Kareem Horstink
  */
-public class Force3D extends Force{
+public class Force3D extends Force {
+
+    public Force3D(double[] vector) {
+        super(vector);
+    }
 
     @Override
     public Force multi(double t) {
         System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return null;
     }
-    
+
 }

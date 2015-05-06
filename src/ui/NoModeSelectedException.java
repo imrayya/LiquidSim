@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Kareem Horstink
+ * Copyright (C) 2015 Imray
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,32 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim.force;
+package ui;
 
 /**
  *
- * @author Kareem Horstink
- * @version 0.1
+ * @author Imray
  */
-public class Force2D extends Force {
+public class NoModeSelectedException extends Exception {
 
-    public Force2D(double[] vector) {
-        super(vector);
+    /**
+     * Creates a new instance of NoModeSelectedException without
+     * detail message.
+     */
+    public NoModeSelectedException() {
     }
 
-    @Override
-    public Force multi(double t) {
-        double[] newVector = new double[2];
-        System.arraycopy(getVector(), 0, newVector, 0, newVector.length);
-        for (int i = 0; i < getVector().length; i++) {
-            newVector[i] *= t;
-        }
-        return new Force2D(newVector);
-    }
-
-    @Override
-    public String toString() {
-        return "Force - "+"x: " + getVector(0) + "; y: " + getVector(1);
+    /**
+     * Constructs an instance of NoModeSelectedException with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
+     */
+    public NoModeSelectedException(String msg) {
+        super(msg);
     }
 
 }

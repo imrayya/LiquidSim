@@ -15,32 +15,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim.force;
+package ui;
+
+import java.awt.BasicStroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
+import sim.GlobalSetting;
+import sim.Simulation;
 
 /**
  *
  * @author Kareem Horstink
- * @version 0.1
  */
-public class Force2D extends Force {
+public class Panel extends JPanel {
 
-    public Force2D(double[] vector) {
-        super(vector);
-    }
+    RenderInterface drawer;
 
-    @Override
-    public Force multi(double t) {
-        double[] newVector = new double[2];
-        System.arraycopy(getVector(), 0, newVector, 0, newVector.length);
-        for (int i = 0; i < getVector().length; i++) {
-            newVector[i] *= t;
+    public Panel(Simulation sim) throws NoModeSelectedException {
+        switch (GlobalSetting.getCalculationMode()) {
+            case GlobalSetting.PLANER:
+                drawer = new ui.plane.Render(sim);
+                break;
+            case GlobalSetting.SPACE:
+                drawer = new ui.space.Render(sim);
+                break;
+            default:
+                throw new NoModeSelectedException();
         }
-        return new Force2D(newVector);
     }
 
     @Override
-    public String toString() {
-        return "Force - "+"x: " + getVector(0) + "; y: " + getVector(1);
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D) g;
+        drawer.render(g2);
     }
 
 }

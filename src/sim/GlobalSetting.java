@@ -25,8 +25,76 @@ package sim;
  */
 public class GlobalSetting {
 
-    private static Long deltaT = 100l;
+    public static final int PLANER = 1;
+    public static final int SPACE = 2;
+    private static int calculationMode = 0;
+    private static Long deltaT = 16l;
     private static double gravity = -9.8;
+    private static int particalSize;
+    private static int height = 800;
+    private static int width = 800;
+
+    /**
+     * Get the value of height
+     *
+     * @return the value of height
+     */
+    public static int getHeight() {
+        return height;
+    }
+
+    /**
+     * Set the value of height
+     *
+     * @param height new value of height
+     */
+    public static void setHeight(int height) {
+        GlobalSetting.height = height;
+    }
+
+    /**
+     * Get the value of width
+     *
+     * @return the value of width
+     */
+    public static int getWidth() {
+        return width;
+    }
+
+    /**
+     * Set the value of width
+     *
+     * @param width new value of width
+     */
+    public static void setWidth(int width) {
+        GlobalSetting.width = width;
+    }
+
+    /**
+     * Get the value of particalSize
+     *
+     * @return the value of particalSize
+     */
+    public static int getParticalSize() {
+        return particalSize;
+    }
+
+    /**
+     * Set the value of particalSize
+     *
+     * @param particalSize new value of particalSize
+     */
+    public static void setParticalSize(int particalSize) {
+        GlobalSetting.particalSize = particalSize;
+    }
+
+    public static int getCalculationMode() {
+        return calculationMode;
+    }
+
+    public static void setCalculationMode(int calculationMode) {
+        GlobalSetting.calculationMode = calculationMode;
+    }
 
     /**
      * Get the value of deltaT

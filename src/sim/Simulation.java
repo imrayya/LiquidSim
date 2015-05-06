@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sim.partical.Partical;
 
 /**
@@ -34,6 +38,7 @@ public class Simulation extends Observable {
     private final ParticalHolder CONTAINER;
     private boolean pause = false;
     private final Timer TIMER;
+    private final BlockingQueue<Partical> toBeRomeved = new LinkedBlockingQueue<>();
 
     public Simulation() {
         this.CONTAINER = new ParticalHolder();
@@ -45,15 +50,20 @@ public class Simulation extends Observable {
                 simulationLoop();
             }
         }, 0, GlobalSetting.getDeltaT());
+
+    }
+
+    public ParticalHolder getCONTAINER() {
+        return CONTAINER;
     }
 
     private void simulationLoop() {
         Iterator<Partical> i = CONTAINER.getIterator();
-        while (!pause) {
+
+        if (!pause) {
             //Sets the predicted location based on previous tick
             while (i.hasNext()) {
                 Partical next = i.next();
-                next.setForce(next.getExternalForce().multi(GlobalSetting.getDeltaT()));
                 next.setPredicted();
             }
 
@@ -61,15 +71,27 @@ public class Simulation extends Observable {
             i = CONTAINER.getIterator();
             while (i.hasNext()) {
                 Partical next = i.next();
-                next.setNeighbors(findNeibours(next));
+//                next.setNeighbors(findNeibours(next));
+
             }
-            
-            
+
             i = CONTAINER.getIterator();
             while (i.hasNext()) {
                 Partical next = i.next();
-                next.setNeighbors(findNeibours(next));
+                next.setPosition(next.getPredicted());
+                if (next.isKill()) {
+                    toBeRomeved.add(next);
+                }
             }
+            for (int j = 0; j < toBeRomeved.size(); j++) {
+                try {
+                    CONTAINER.removePartical(toBeRomeved.take());
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+            }
+            setChanged();
+            notifyObservers();
         }
     }
 

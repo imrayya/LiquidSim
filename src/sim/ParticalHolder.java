@@ -19,7 +19,10 @@ package sim;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import sim.force.Force2D;
 import sim.partical.Partical;
+import sim.partical.Partical2D;
+import sim.position.Position;
 
 /**
  *
@@ -27,21 +30,30 @@ import sim.partical.Partical;
  * @version 0.1
  */
 public class ParticalHolder {
+
     private final LinkedList<Partical> PARTICLES;
 
     public ParticalHolder() {
         this.PARTICLES = new LinkedList<>();
+        PARTICLES.add(new Partical2D(new Position(250, 400)));
+        PARTICLES.getFirst().setForce(new Force2D(new double[]{10, 0}));
+        PARTICLES.add(new Partical2D(new Position(250, 250)));
+        PARTICLES.getLast().setForce(new Force2D(new double[]{-10, 0}));
     }
-    
-    public Iterator getIterator(){
+
+    public Iterator getIterator() {
         return PARTICLES.iterator();
     }
-    
-    protected Partical removePartical(Partical p){
+
+    protected Partical removePartical(Partical p) {
         return PARTICLES.remove(PARTICLES.indexOf(p));
     }
-    
-    protected void addPartical(Partical p){
+
+    protected void addPartical(Partical p) {
         PARTICLES.add(p);
+    }
+
+    protected int size() {
+        return PARTICLES.size();
     }
 }

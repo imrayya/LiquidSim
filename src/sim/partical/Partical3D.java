@@ -17,7 +17,6 @@
  */
 package sim.partical;
 
-import sim.Position;
 
 /**
  *
@@ -28,12 +27,6 @@ public class Partical3D extends Partical {
     @Override
     public void setPredicted() {
         System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Position getPredicted() {
-        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
     }
 
 }

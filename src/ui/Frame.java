@@ -17,13 +17,38 @@
  */
 package ui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JFrame;
+import sim.GlobalSetting;
+import sim.Simulation;
 
 /**
  *
  * @author Kareem Horstink
  * @version 0.1
  */
-public class Frame extends JFrame{
-    
+public class Frame extends JFrame implements Observer {
+
+    protected final Panel panel;
+
+    public Frame(Simulation sim) throws NoModeSelectedException {
+        this.panel = new Panel(sim);
+        this.add(panel);
+        sim.addObserver(this);
+
+        setSize(GlobalSetting.getWidth(), GlobalSetting.getHeight());
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(dim.width / 2 - this.getWidth() / 2, dim.height / 2 - this.getHeight() / 2);
+        setDefaultCloseOperation(3);
+        setVisible(true);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        panel.repaint();
+    }
+
 }

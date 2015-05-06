@@ -18,6 +18,7 @@
 package ui.space;
 
 import java.awt.Graphics2D;
+import sim.Simulation;
 import ui.RenderInterface;
 
 /**
@@ -26,6 +27,12 @@ import ui.RenderInterface;
  * @version 0.1
  */
 public class Render implements RenderInterface {
+
+    private final Simulation SIM;
+
+    public Render(Simulation sim) {
+        this.SIM = sim;
+    }
 
     @Override
     public void render(Graphics2D g) {

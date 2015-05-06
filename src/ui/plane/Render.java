@@ -18,6 +18,12 @@
 package ui.plane;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.util.Iterator;
+import sim.GlobalSetting;
+import sim.Simulation;
+import sim.partical.Partical2D;
 import ui.RenderInterface;
 
 /**
@@ -25,11 +31,32 @@ import ui.RenderInterface;
  * @author Kareem Horstink
  * @version 0.1
  */
-public class Render implements RenderInterface{
+public class Render implements RenderInterface {
+
+    private final Simulation SIM;
+
+    public Render(Simulation sim) {
+        this.SIM = sim;
+    }
 
     @Override
     public void render(Graphics2D g) {
-        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterator<Partical2D> i = SIM.getCONTAINER().getIterator();
+        while (i.hasNext()) {
+            Partical2D next = i.next();
+            g.fill(new Ellipse2D.Double(
+                    next.getPosition().getX()-GlobalSetting.getParticalSize()/2,
+                    next.getPosition().getY()-GlobalSetting.getParticalSize()/2,
+                    GlobalSetting.getParticalSize(),
+                    GlobalSetting.getParticalSize())
+            );
+
+            g.draw(new Line2D.Double(
+                    next.getPosition().getX(),
+                    next.getPosition().getY(),
+                    next.getPosition().getX() + next.getForce().getVector(0),
+                    next.getPosition().getY() + next.getForce().getVector(1)));
+        }
     }
-    
+
 }

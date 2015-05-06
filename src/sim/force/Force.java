@@ -23,5 +23,49 @@ package sim.force;
  */
 public abstract class Force {
 
+    private double[] vector;
+
+    public Force(double[] vector) {
+        this.vector = vector;
+    }
+
+    /**
+     * Get the value of vector
+     *
+     * @return the value of vector
+     */
+    public double[] getVector() {
+        return vector;
+    }
+
+    /**
+     * Set the value of vector
+     *
+     * @param vector new value of vector
+     */
+    public void setVector(double[] vector) {
+        this.vector = vector;
+    }
+
+    /**
+     * Get the value of vector at specified index
+     *
+     * @param index the index of vector
+     * @return the value of vector at specified index
+     */
+    public double getVector(int index) {
+        return this.vector[index];
+    }
+
+    /**
+     * Set the value of vector at specified index.
+     *
+     * @param index the index of vector
+     * @param vector new value of vector at specified index
+     */
+    public void setVector(int index, double vector) {
+        this.vector[index] = vector;
+    }
+
     public abstract Force multi(double t);
 }
