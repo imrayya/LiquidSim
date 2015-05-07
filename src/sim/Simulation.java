@@ -58,10 +58,10 @@ public class Simulation extends Observable {
     }
 
     private void simulationLoop() {
-        Iterator<Partical> i = CONTAINER.getIterator();
 
         if (!pause) {
             //Sets the predicted location based on previous tick
+            Iterator<Partical> i = CONTAINER.getIterator();
             while (i.hasNext()) {
                 Partical next = i.next();
                 next.setPredicted();
@@ -90,6 +90,7 @@ public class Simulation extends Observable {
                     System.out.println(ex);
                 }
             }
+            CONTAINER.triggerAdd();
             setChanged();
             notifyObservers();
         }

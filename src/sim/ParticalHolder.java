@@ -18,7 +18,7 @@
 package sim;
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Stack;
 import sim.force.Force2D;
 import sim.partical.Partical;
 import sim.partical.Partical2D;
@@ -31,14 +31,16 @@ import sim.position.Position;
  */
 public class ParticalHolder {
 
-    private final LinkedList<Partical> PARTICLES;
+    private final Stack<Partical> PARTICLES;
+    private final Stack<Partical> TO_BE_ADDED;
 
     public ParticalHolder() {
-        this.PARTICLES = new LinkedList<>();
+        this.PARTICLES = new Stack<>();
+        this.TO_BE_ADDED = new Stack<>();
         PARTICLES.add(new Partical2D(new Position(250, 400)));
-        PARTICLES.getFirst().setForce(new Force2D(new double[]{10, 0}));
+        PARTICLES.get(0).setForce(new Force2D(new double[]{10, 0}));
         PARTICLES.add(new Partical2D(new Position(250, 250)));
-        PARTICLES.getLast().setForce(new Force2D(new double[]{-10, 0}));
+        PARTICLES.get(1).setForce(new Force2D(new double[]{-10, 0}));
     }
 
     public Iterator getIterator() {
@@ -46,11 +48,18 @@ public class ParticalHolder {
     }
 
     protected Partical removePartical(Partical p) {
-        return PARTICLES.remove(PARTICLES.indexOf(p));
+        PARTICLES.remove(p);
+        return p;
     }
 
-    protected void addPartical(Partical p) {
-        PARTICLES.add(p);
+    public void addPartical(Partical p) {
+        TO_BE_ADDED.push(p);
+    }
+
+    public void triggerAdd() {
+        for (int i = 0; i < TO_BE_ADDED.size(); i++) {
+            PARTICLES.push(TO_BE_ADDED.pop());
+        }
     }
 
     protected int size() {

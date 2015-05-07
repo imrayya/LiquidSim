@@ -26,39 +26,40 @@ import sim.position.Position;
  * @author Kareem Horstink
  */
 public class Partical2D extends Partical {
-    
+
     public Partical2D(Position p) {
-        setPosition(p);
+        this.setPosition(p);
         setPredicted(new Position());
-        
+
     }
-    
+
     @Override
     public void setPredicted() {
-        something();
+        predictForce();
         Position tmp = new Position();
         tmp.setX(getPosition().getX() + getForce().multi(GlobalSetting.getDeltaT().doubleValue() / 1000).getVector(0));
         tmp.setY(getPosition().getY() + getForce().multi(GlobalSetting.getDeltaT().doubleValue() / 1000).getVector(1));
         setPredicted(tmp);
     }
-    
+
     @Override
     public void setPosition(Position position) {
-        if (position.getX() < 0 || position.getX() > GlobalSetting.getWidth() || position.getY() < 0 || position.getY() > GlobalSetting.getHeight()) {
+        if (position.getX() < 0 || position.getX() > GlobalSetting.getWidth()
+                || position.getY() < 0 || position.getY() > GlobalSetting.getHeight()) {
             setKill(true);
         } else {
             super.setPosition(position);
         }
     }
-    
-    private void something() {
+
+    private void predictForce() {
         Force2D f = (Force2D) getForce();
-        
+
         Gravity:
         {
             f.setVector(1, f.getVector(1) + (getMass() * (-GlobalSetting.getGravity() * (GlobalSetting.getDeltaT().doubleValue() / 1000))));
         }
         setForce(f);
     }
-    
+
 }

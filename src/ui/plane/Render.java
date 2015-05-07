@@ -29,7 +29,7 @@ import ui.RenderInterface;
 /**
  *
  * @author Kareem Horstink
- * @version 0.1
+ * @version 0.15
  */
 public class Render implements RenderInterface {
 
@@ -41,21 +41,22 @@ public class Render implements RenderInterface {
 
     @Override
     public void render(Graphics2D g) {
+        SIM.getCONTAINER().triggerAdd();
         Iterator<Partical2D> i = SIM.getCONTAINER().getIterator();
         while (i.hasNext()) {
             Partical2D next = i.next();
             g.fill(new Ellipse2D.Double(
-                    next.getPosition().getX()-GlobalSetting.getParticalSize()/2,
-                    next.getPosition().getY()-GlobalSetting.getParticalSize()/2,
+                    next.getPosition().getX() - GlobalSetting.getParticalSize() / 2,
+                    next.getPosition().getY() - GlobalSetting.getParticalSize() / 2,
                     GlobalSetting.getParticalSize(),
                     GlobalSetting.getParticalSize())
             );
 
-            g.draw(new Line2D.Double(
-                    next.getPosition().getX(),
-                    next.getPosition().getY(),
-                    next.getPosition().getX() + next.getForce().getVector(0),
-                    next.getPosition().getY() + next.getForce().getVector(1)));
+//            g.draw(new Line2D.Double(
+//                    next.getPosition().getX(),
+//                    next.getPosition().getY(),
+//                    next.getPosition().getX() + next.getForce().getVector(0),
+//                    next.getPosition().getY() + next.getForce().getVector(1)));
         }
     }
 

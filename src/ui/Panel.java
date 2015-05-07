@@ -17,7 +17,7 @@
  */
 package ui;
 
-import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
@@ -27,12 +27,14 @@ import sim.Simulation;
 /**
  *
  * @author Kareem Horstink
+ * @version 0.1
  */
 public class Panel extends JPanel {
 
     RenderInterface drawer;
 
     public Panel(Simulation sim) throws NoModeSelectedException {
+        setBackground(Color.gray);
         switch (GlobalSetting.getCalculationMode()) {
             case GlobalSetting.PLANER:
                 drawer = new ui.plane.Render(sim);

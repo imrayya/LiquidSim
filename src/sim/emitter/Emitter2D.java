@@ -15,41 +15,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package ui;
+package sim.emitter;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.util.Observable;
-import java.util.Observer;
-import javax.swing.JFrame;
-import sim.GlobalSetting;
 import sim.Simulation;
+import sim.force.Force2D;
+import sim.partical.Partical2D;
+import sim.position.Position;
 
 /**
  *
  * @author Kareem Horstink
  * @version 0.15
  */
-public class Frame extends JFrame implements Observer {
+public class Emitter2D extends Emitter {
 
-    protected final Panel panel;
-
-    public Frame(Simulation sim) throws NoModeSelectedException {
-        this.panel = new Panel(sim);
-        panel.addMouseListener(new MouseList(sim));
-        this.add(panel);
-        sim.addObserver(this);
-
-        setSize(GlobalSetting.getWidth(), GlobalSetting.getHeight());
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width / 2 - this.getWidth() / 2, dim.height / 2 - this.getHeight() / 2);
-        setDefaultCloseOperation(3);
-        setVisible(true);
+    public Emitter2D(Simulation sim, Position position, double size, double spacing) {
+        super(sim, position, size, spacing);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        panel.repaint();
+    public void create() {
+        for (double i = getPosition().getX() - getSize() / 2; i < getPosition().getX() + getSize() / 2; i += getSpacing()) {
+            for (double j = getPosition().getY() - getSize() / 2; j < getPosition().getY() + getSize() / 2; j += getSpacing()) {
+                System.out.println("emit: " + i + " " + j);
+                Partical2D p = new Partical2D(new Position(i, j));
+                p.setForce(new Force2D(new double[]{0, 0}));
+                getSim().getCONTAINER().addPartical(p);
+            }
+        }
+
     }
 
 }
