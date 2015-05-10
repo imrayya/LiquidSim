@@ -29,7 +29,7 @@ public class GlobalSetting {
     public static final int SPACE = 2;
     private static int calculationMode = 0;
     private static Long deltaT = 16l;
-    private static double gravity = -9.8;
+    private static double gravity =-9.81;
     private static int particalSize;
     private static int height = 800;
     private static int width = 800;

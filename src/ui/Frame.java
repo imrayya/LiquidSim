@@ -19,11 +19,19 @@ package ui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JFrame;
 import sim.GlobalSetting;
 import sim.Simulation;
+import sim.emitter.Emitter;
+import sim.emitter.Emitter2D;
+import sim.position.Position;
 
 /**
  *
@@ -33,10 +41,86 @@ import sim.Simulation;
 public class Frame extends JFrame implements Observer {
 
     protected final Panel panel;
+    private Emitter emitter;
+    private Simulation sim;
+    private int x = -1;
+    private int y = -1;
 
     public Frame(Simulation sim) throws NoModeSelectedException {
+        this.sim = sim;
         this.panel = new Panel(sim);
-        panel.addMouseListener(new MouseList(sim));
+        panel.addMouseMotionListener(new MouseMotionListener() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (x != -1 && y != -1) {
+                    emitter.setPosition(new Position(e.getX(), e.getY()));
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            }
+        });
+
+        panel.addMouseListener(new MouseListener() {
+
+            private Timer timer;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                x = e.getX();
+                y = e.getY();
+                if (emitter == null) {
+                    switch (GlobalSetting.getCalculationMode()) {
+                        case GlobalSetting.PLANER:
+                            emitter = new Emitter2D(sim, new Position(x, y), 20, 5);
+                            break;
+                        case GlobalSetting.SPACE:
+                            emitter = null;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        create();
+                    }
+                }, 0, GlobalSetting.getDeltaT() * 10);
+            }
+
+            private void create() {
+
+                emitter.create();
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                timer.cancel();
+                timer = null;
+                emitter = null;
+                x = -1;
+                y = -1;
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
         this.add(panel);
         sim.addObserver(this);
 
@@ -48,6 +132,7 @@ public class Frame extends JFrame implements Observer {
     }
 
     @Override
+
     public void update(Observable o, Object arg) {
         panel.repaint();
     }

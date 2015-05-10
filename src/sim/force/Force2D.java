@@ -17,6 +17,8 @@
  */
 package sim.force;
 
+import sim.angle.Angle;
+
 /**
  *
  * @author Kareem Horstink
@@ -43,8 +45,23 @@ public class Force2D extends Force {
         return "Force - " + "x: " + getVector(0) + "; y: " + getVector(1);
     }
 
-    public double angle() {
-        return Math.asin(getVector(0) / getVector(1));
+    public Angle angle() {
+        if (Math.signum(getVector(0)) == 1 && Math.signum(getVector(1)) == 1) {
+            return new Angle(Math.atan(getVector(1) / getVector(0)));
+        }
+
+        if (Math.signum(getVector(0)) == -1 && Math.signum(getVector(1)) == 1) {
+            return new Angle(Math.atan(getVector(1) / getVector(0)) + 2 * Math.PI);
+        }
+
+        if (Math.signum(getVector(0)) == -1 && Math.signum(getVector(1)) == -1) {
+            return new Angle(Math.atan(getVector(1) / getVector(0)) + Math.PI);
+        }
+
+        if (Math.signum(getVector(0)) == 1 && Math.signum(getVector(1)) == -1) {
+            return new Angle(Math.atan(getVector(1) / getVector(0)) + Math.PI);
+        }
+        return new Angle(0);
     }
 
     @Override
@@ -55,6 +72,24 @@ public class Force2D extends Force {
     @Override
     public Force add(Force f) {
         return new Force2D(new double[]{getVector(0) + f.getVector(0), getVector(1) + f.getVector(1)});
+    }
+
+    public static void main(String[] args) {
+//        System.out.println(Math.sin(Math.PI/2));
+        Force2D f = new Force2D(new double[]{1, 0});
+        System.out.println(f);
+        f = (Force2D) f.reflect(1, f.angle());
+        System.out.println(f);
+    }
+
+    @Override
+    public Force reflect(double e, Angle a) {
+        double h = Math.sqrt(Math.pow(getVector(0), 2) + Math.pow(getVector(1), 2));
+        System.out.println(h);
+        return new Force2D(new double[]{
+            h * Math.sin(2 * Math.PI - a.getX()) * e,
+            h * Math.cos(2 * Math.PI - a.getX()) * e});
+
     }
 
 }

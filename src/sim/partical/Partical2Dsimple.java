@@ -30,13 +30,13 @@ import sim.position.Position;
  * @author Kareem Horstink
  */
 public class Partical2Dsimple extends Partical {
-    
+
     public Partical2Dsimple(Position p) {
         this.setPosition(p);
         setPredicted(new Position());
         resetExternalForce();
     }
-    
+
     @Override
     public void setPredicted() {
         predictForce();
@@ -45,54 +45,54 @@ public class Partical2Dsimple extends Partical {
         tmp.setY(getPosition().getY() + getForce().multi(GlobalSetting.getDeltaT().doubleValue() / 1000).getVector(1));
         setPredicted(tmp);
     }
-    
+
     @Override
     public void setPosition(Position position) {
-        if (position.getX() < 0 || position.getX() > GlobalSetting.getWidth()
-                || position.getY() < 0 || position.getY() > GlobalSetting.getHeight()) {
+        if (position.getX() > GlobalSetting.getWidth()
+                || position.getY() > GlobalSetting.getHeight()) {
             setKill(true);
         } else {
             super.setPosition(position);
         }
     }
-    
+
     private void predictForce() {
         Force2D f = (Force2D) getForce();
-        
+
         Gravity:
         {
             f.setVector(1, f.getVector(1) + (getMass() * (-GlobalSetting.getGravity() * (GlobalSetting.getDeltaT().doubleValue() / 1000))));
         }
-        
+
         ExternalForce:
         {
-            
-            f = (Force2D) (f.add(getExternalForce()));
+
+//            f = (Force2D) (f.add(getExternalForce()));
         }
         setForce(f);
     }
-    
+
     @Override
     public void handleCollision(Collider c) {
-        setForce(getForce().reflect(c.getElasticity()));
+        setForce(getForce().reflect(c.getElasticity(),c.getAngle(this)));
     }
-    
+
     @Override
     public void handleCollision(Partical p) {
         double x1 = ((getMass() - p.getMass()) / (getMass() + p.getMass())) * getForce().getVector(0)
                 + ((2 * p.getMass()) / (getMass() + p.getMass())) * p.getForce().getVector(0);
         double y1 = ((getMass() - p.getMass()) / (getMass() + p.getMass())) * getForce().getVector(1)
                 + ((2 * p.getMass()) / (getMass() + p.getMass())) * p.getForce().getVector(1);
-        
+
         double x2 = ((2 * getMass()) / getMass() + p.getMass()) * getForce().getVector(0)
                 + ((p.getMass() - getMass()) / (getMass() + p.getMass())) * p.getForce().getVector(0);
         double y2 = ((2 * getMass()) / getMass() + p.getMass()) * getForce().getVector(1)
                 + ((p.getMass() - getMass()) / (getMass() + p.getMass())) * p.getForce().getVector(1);
-        
+
         setExternalForce(new Force2D(new double[]{x1, y1}));
         p.setExternalForce(new Force2D(new double[]{x2, y2}));
     }
-    
+
     @Override
     public boolean detectCollision(Partical p) {
         return new Ellipse2D.Double(
@@ -105,10 +105,10 @@ public class Partical2Dsimple extends Partical {
                                 GlobalSetting.getParticalSize(),
                                 GlobalSetting.getParticalSize()));
     }
-    
+
     @Override
     public void resetExternalForce() {
         setExternalForceR(new Force2D(new double[]{0, 0}));
     }
-    
+
 }

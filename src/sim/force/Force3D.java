@@ -17,6 +17,8 @@
  */
 package sim.force;
 
+import sim.angle.Angle;
+
 /**
  *
  * @author Kareem Horstink
@@ -41,6 +43,12 @@ public class Force3D extends Force {
 
     @Override
     public Force add(Force f) {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+    }
+
+    @Override
+    public Force reflect(double e, Angle a) {
         System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return null;
     }

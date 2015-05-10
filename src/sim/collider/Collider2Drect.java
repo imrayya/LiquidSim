@@ -18,6 +18,9 @@
 package sim.collider;
 
 import java.awt.geom.Rectangle2D;
+import sim.angle.Angle;
+import sim.force.Force2D;
+import sim.partical.Partical;
 import sim.position.Position;
 
 /**
@@ -130,4 +133,9 @@ public class Collider2Drect extends Collider {
         this.h = h;
     }
 
+    @Override
+    public Angle getAngle(Partical p) {
+        Force2D f = (Force2D)p.getForce();
+       return new Angle(f.angle().getX()*-1);
+    }
 }

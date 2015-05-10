@@ -81,6 +81,7 @@ public class Simulation extends Observable {
                 }
             }
 
+            //Handles collision with particulas
             i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
                 Partical partical1 = i.next();
@@ -94,6 +95,7 @@ public class Simulation extends Observable {
             }
 
             //sets the new predicted location
+            //resets the external forces on the object
             i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
                 Partical partical = i.next();

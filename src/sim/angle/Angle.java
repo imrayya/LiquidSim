@@ -15,39 +15,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim.collider;
-
-import sim.angle.Angle;
-import sim.partical.Partical;
-import sim.position.Position;
+package sim.angle;
 
 /**
  *
  * @author Imray
  */
-public abstract class Collider {
+public class Angle {
 
-    public abstract Angle getAngle(Partical p);
+    private double x = 0;
 
-    private double elasticity = 1;
+    public Angle(double x) {
+        this.x = x;
+    }
 
-    /**
-     * Get the value of elasticity
-     *
-     * @return the value of elasticity
-     */
-    public double getElasticity() {
-        return elasticity;
+    public Angle() {
     }
 
     /**
-     * Set the value of elasticity
+     * Get the value of x
      *
-     * @param elasticity new value of elasticity
+     * @return the value of x
      */
-    public void setElasticity(double elasticity) {
-        this.elasticity = elasticity;
+    public double getX() {
+        return x;
     }
 
-    public abstract boolean contains(Position p);
+    /**
+     * Set the value of x
+     *
+     * @param x new value of x
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    @Override
+    public String toString() {
+        return "Angle: " + x*180/Math.PI;
+    }
+    
+    
 }

@@ -18,6 +18,7 @@
 package sim.partical;
 
 import java.util.List;
+import sim.angle.Angle;
 import sim.collider.Collider;
 import sim.position.Position;
 import sim.force.Force;

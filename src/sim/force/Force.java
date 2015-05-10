@@ -17,6 +17,8 @@
  */
 package sim.force;
 
+import sim.angle.Angle;
+
 /**
  *
  * @author Kareem Horstink
@@ -26,7 +28,9 @@ public abstract class Force {
     private double[] vector;
 
     public abstract Force reflect(double e);
-    
+
+    public abstract Force reflect(double e, Angle a);
+
     public abstract Force add(Force f);
 
     public Force(double[] vector) {

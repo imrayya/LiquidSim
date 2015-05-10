@@ -39,13 +39,17 @@ public class ParticalHolder {
         this.PARTICLES = new Stack<>();
         this.TO_BE_ADDED = new Stack<>();
         this.COLLIDERS = new Stack<>();
-        COLLIDERS.add(new Collider2Drect(0, 600, 800, 5,1));
+        COLLIDERS.add(new Collider2Drect(0, 700, 740, 40, 1));
+        COLLIDERS.add(new Collider2Drect(0, 0, 40, 700, 1));
+        COLLIDERS.add(new Collider2Drect(740, 0, 40, 740, 1));
+        COLLIDERS.add(new Collider2Drect(40, 0, 700, 40, 1));
+
     }
 
     public Iterator getIteratorP() {
         return PARTICLES.iterator();
     }
-    
+
     public Iterator getIteratorC() {
         return COLLIDERS.iterator();
     }

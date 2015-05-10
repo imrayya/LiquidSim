@@ -17,6 +17,7 @@
  */
 package sim.emitter;
 
+import java.util.Random;
 import sim.Simulation;
 import sim.force.Force2D;
 import sim.partical.Partical2Dsimple;
@@ -37,9 +38,23 @@ public class Emitter2D extends Emitter {
     public void create() {
         for (double i = getPosition().getX() - getSize() / 2; i < getPosition().getX() + getSize() / 2; i += getSpacing()) {
             for (double j = getPosition().getY() - getSize() / 2; j < getPosition().getY() + getSize() / 2; j += getSpacing()) {
-                System.out.println("emit: " + i + " " + j);
                 Partical2Dsimple p = new Partical2Dsimple(new Position(i, j));
-                p.setForce(new Force2D(new double[]{0, 0}));
+                Random r = new Random();
+                double x = r.nextDouble();
+                double y = r.nextDouble();
+                if (x > 0.5) {
+                    x = -1;
+                } else {
+                    x = 1;
+                }
+
+                if (y > 0.5) {
+                    y = -1;
+                } else {
+                    y = 1;
+                }
+
+                p.setForce(new Force2D(new double[]{x*r.nextInt(10000) * 0.01, y*r.nextInt(10000) * 0.01}));
                 getSim().getCONTAINER().addPartical(p);
             }
         }
