@@ -17,6 +17,7 @@
  */
 package sim.partical;
 
+import sim.collider.Collider;
 
 /**
  *
@@ -27,6 +28,27 @@ public class Partical3D extends Partical {
     @Override
     public void setPredicted() {
         System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void handleCollision(Collider c) {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void handleCollision(Partical p) {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void resetExternalForce() {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean detectCollision(Partical p) {
+        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
 }

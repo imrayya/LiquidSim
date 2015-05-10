@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Kareem Horstink
+ * Copyright (C) 2015 Imray
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,34 +15,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package sim.force;
+package sim.collider;
+
+import sim.position.Position;
 
 /**
  *
- * @author Kareem Horstink
+ * @author Imray
  */
-public class Force3D extends Force {
+public abstract class Collider {
 
-    public Force3D(double[] vector) {
-        super(vector);
+    private double elasticity = 1;
+
+    /**
+     * Get the value of elasticity
+     *
+     * @return the value of elasticity
+     */
+    public double getElasticity() {
+        return elasticity;
     }
 
-    @Override
-    public Force multi(double t) {
-        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
+    /**
+     * Set the value of elasticity
+     *
+     * @param elasticity new value of elasticity
+     */
+    public void setElasticity(double elasticity) {
+        this.elasticity = elasticity;
     }
 
-    @Override
-    public Force reflect(double e) {
-        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
-    }
-
-    @Override
-    public Force add(Force f) {
-        System.out.println("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
-    }
-
+    public abstract boolean contains(Position p);
 }

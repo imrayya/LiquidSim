@@ -42,6 +42,8 @@ public abstract class Emitter {
         this.spacing = spacing;
     }
 
+    public abstract void create();
+
     /**
      * Get the value of sim
      *
@@ -114,5 +116,4 @@ public abstract class Emitter {
         this.position = position;
     }
 
-    public abstract void create();
 }

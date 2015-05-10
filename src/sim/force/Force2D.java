@@ -40,7 +40,21 @@ public class Force2D extends Force {
 
     @Override
     public String toString() {
-        return "Force - "+"x: " + getVector(0) + "; y: " + getVector(1);
+        return "Force - " + "x: " + getVector(0) + "; y: " + getVector(1);
+    }
+
+    public double angle() {
+        return Math.asin(getVector(0) / getVector(1));
+    }
+
+    @Override
+    public Force reflect(double e) {
+        return new Force2D(new double[]{(getVector(0) * -1) * e, (getVector(1) * -1) * e});
+    }
+
+    @Override
+    public Force add(Force f) {
+        return new Force2D(new double[]{getVector(0) + f.getVector(0), getVector(1) + f.getVector(1)});
     }
 
 }

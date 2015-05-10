@@ -26,6 +26,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sim.collider.Collider;
 import sim.partical.Partical;
 
 /**
@@ -61,21 +62,46 @@ public class Simulation extends Observable {
 
         if (!pause) {
             //Sets the predicted location based on previous tick
-            Iterator<Partical> i = CONTAINER.getIterator();
+            Iterator<Partical> i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
                 Partical next = i.next();
                 next.setPredicted();
             }
 
-            //finds the neighbors
-            i = CONTAINER.getIterator();
+            //finds the colliders
+            i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
-                Partical next = i.next();
-//                next.setNeighbors(findNeibours(next));
-
+                Partical partical = i.next();
+                Iterator<Collider> t = CONTAINER.getIteratorC();
+                while (t.hasNext()) {
+                    Collider collider = t.next();
+                    if (collider.contains(partical.getPredicted())) {
+                        partical.handleCollision(collider);
+                    }
+                }
             }
 
-            i = CONTAINER.getIterator();
+            i = CONTAINER.getIteratorP();
+            while (i.hasNext()) {
+                Partical partical1 = i.next();
+                Iterator<Partical> j = CONTAINER.getIteratorP();
+                while (j.hasNext()) {
+                    Partical partical2 = j.next();
+                    if (partical1 != partical2 && partical1.detectCollision(partical2)) {
+                        partical1.handleCollision(partical2);
+                    }
+                }
+            }
+
+            //sets the new predicted location
+            i = CONTAINER.getIteratorP();
+            while (i.hasNext()) {
+                Partical partical = i.next();
+                partical.setPredicted();
+                partical.resetExternalForce();
+            }
+
+            i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
                 Partical next = i.next();
                 next.setPosition(next.getPredicted());

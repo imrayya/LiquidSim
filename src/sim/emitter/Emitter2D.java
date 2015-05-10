@@ -19,7 +19,7 @@ package sim.emitter;
 
 import sim.Simulation;
 import sim.force.Force2D;
-import sim.partical.Partical2D;
+import sim.partical.Partical2Dsimple;
 import sim.position.Position;
 
 /**
@@ -38,7 +38,7 @@ public class Emitter2D extends Emitter {
         for (double i = getPosition().getX() - getSize() / 2; i < getPosition().getX() + getSize() / 2; i += getSpacing()) {
             for (double j = getPosition().getY() - getSize() / 2; j < getPosition().getY() + getSize() / 2; j += getSpacing()) {
                 System.out.println("emit: " + i + " " + j);
-                Partical2D p = new Partical2D(new Position(i, j));
+                Partical2Dsimple p = new Partical2Dsimple(new Position(i, j));
                 p.setForce(new Force2D(new double[]{0, 0}));
                 getSim().getCONTAINER().addPartical(p);
             }

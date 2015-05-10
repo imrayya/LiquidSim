@@ -18,6 +18,7 @@
 package sim.partical;
 
 import java.util.List;
+import sim.collider.Collider;
 import sim.position.Position;
 import sim.force.Force;
 
@@ -50,6 +51,12 @@ public abstract class Partical {
     private List<Partical> neighbors;
 
     public abstract void setPredicted();
+
+    public abstract void handleCollision(Collider c);
+
+    public abstract void handleCollision(Partical p);
+
+    public abstract boolean detectCollision(Partical p);
 
     /**
      * Get the value of kill
@@ -213,11 +220,17 @@ public abstract class Partical {
     }
 
     /**
-     * Set the value of externalForce
+     * Set the value of externalForce (adds)
      *
      * @param externalForce new value of externalForce
      */
     public void setExternalForce(Force externalForce) {
+        this.externalForce = this.externalForce.add(externalForce);
+    }
+
+    public abstract void resetExternalForce();
+
+    public void setExternalForceR(Force externalForce) {
         this.externalForce = externalForce;
     }
 

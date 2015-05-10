@@ -17,12 +17,12 @@
  */
 package sim;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
-import sim.force.Force2D;
+import sim.collider.Collider;
+import sim.collider.Collider2Drect;
 import sim.partical.Partical;
-import sim.partical.Partical2D;
-import sim.position.Position;
 
 /**
  *
@@ -32,19 +32,22 @@ import sim.position.Position;
 public class ParticalHolder {
 
     private final Stack<Partical> PARTICLES;
+    private final Stack<Collider> COLLIDERS;
     private final Stack<Partical> TO_BE_ADDED;
 
     public ParticalHolder() {
         this.PARTICLES = new Stack<>();
         this.TO_BE_ADDED = new Stack<>();
-        PARTICLES.add(new Partical2D(new Position(250, 400)));
-        PARTICLES.get(0).setForce(new Force2D(new double[]{10, 0}));
-        PARTICLES.add(new Partical2D(new Position(250, 250)));
-        PARTICLES.get(1).setForce(new Force2D(new double[]{-10, 0}));
+        this.COLLIDERS = new Stack<>();
+        COLLIDERS.add(new Collider2Drect(0, 600, 800, 5,1));
     }
 
-    public Iterator getIterator() {
+    public Iterator getIteratorP() {
         return PARTICLES.iterator();
+    }
+    
+    public Iterator getIteratorC() {
+        return COLLIDERS.iterator();
     }
 
     protected Partical removePartical(Partical p) {

@@ -25,6 +25,10 @@ public abstract class Force {
 
     private double[] vector;
 
+    public abstract Force reflect(double e);
+    
+    public abstract Force add(Force f);
+
     public Force(double[] vector) {
         this.vector = vector;
     }
