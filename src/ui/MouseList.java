@@ -13,7 +13,7 @@ import sim.GlobalSetting;
 import sim.Simulation;
 import sim.emitter.Emitter;
 import sim.emitter.Emitter2D;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
@@ -39,7 +39,7 @@ public class MouseList implements MouseListener {
         if (emitter == null) {
             switch (GlobalSetting.getCalculationMode()) {
                 case GlobalSetting.PLANER:
-                    emitter = new Emitter2D(sim, new Position(e.getX(), e.getY()), 1, 5);
+                    emitter = new Emitter2D(sim, new Position2D(e.getX(), e.getY()), 1,5);
                     break;
                 case GlobalSetting.SPACE:
                     emitter = null;
@@ -55,7 +55,7 @@ public class MouseList implements MouseListener {
             public void run() {
                 create();
             }
-        }, 0, GlobalSetting.getDeltaT() * 10);
+        }, 0, GlobalSetting.getTickLength()* 10);
     }
 
     private void create() {

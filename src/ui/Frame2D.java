@@ -31,14 +31,14 @@ import sim.GlobalSetting;
 import sim.Simulation;
 import sim.emitter.Emitter;
 import sim.emitter.Emitter2D;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
  * @author Kareem Horstink
  * @version 0.15
  */
-public class Frame extends JFrame implements Observer {
+public class Frame2D extends JFrame implements Observer {
 
     protected final Panel panel;
     private Emitter emitter;
@@ -46,7 +46,7 @@ public class Frame extends JFrame implements Observer {
     private int x = -1;
     private int y = -1;
 
-    public Frame(Simulation sim) throws NoModeSelectedException {
+    public Frame2D(Simulation sim) throws NoModeSelectedException {
         this.sim = sim;
         this.panel = new Panel(sim);
         panel.addMouseMotionListener(new MouseMotionListener() {
@@ -54,7 +54,7 @@ public class Frame extends JFrame implements Observer {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (x != -1 && y != -1) {
-                    emitter.setPosition(new Position(e.getX(), e.getY()));
+                    emitter.setPosition(new Position2D(e.getX(), panel.getHeight()-e.getY()));
                 }
             }
 
@@ -78,7 +78,7 @@ public class Frame extends JFrame implements Observer {
                 if (emitter == null) {
                     switch (GlobalSetting.getCalculationMode()) {
                         case GlobalSetting.PLANER:
-                            emitter = new Emitter2D(sim, new Position(x, y), 20, 5);
+                            emitter = new Emitter2D(sim, new Position2D(x, panel.getHeight()-y), 2, 5);
                             break;
                         case GlobalSetting.SPACE:
                             emitter = null;
@@ -94,7 +94,7 @@ public class Frame extends JFrame implements Observer {
                     public void run() {
                         create();
                     }
-                }, 0, GlobalSetting.getDeltaT() * 10);
+                }, 0, GlobalSetting.getTickLength()* 10);
             }
 
             private void create() {
@@ -123,7 +123,7 @@ public class Frame extends JFrame implements Observer {
 
         this.add(panel);
         sim.addObserver(this);
-
+        setLocationRelativeTo(null);
         setSize(GlobalSetting.getWidth(), GlobalSetting.getHeight());
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(dim.width / 2 - this.getWidth() / 2, dim.height / 2 - this.getHeight() / 2);
@@ -132,7 +132,6 @@ public class Frame extends JFrame implements Observer {
     }
 
     @Override
-
     public void update(Observable o, Object arg) {
         panel.repaint();
     }

@@ -1,7 +1,7 @@
 
 import sim.GlobalSetting;
 import sim.Simulation;
-import ui.Frame;
+import ui.Frame2D;
 import ui.NoModeSelectedException;
 
 /**
@@ -20,7 +20,7 @@ public class Main {
         GlobalSetting.setCalculationMode(GlobalSetting.PLANER);
         GlobalSetting.setParticalSize(5);
         try {
-            Frame frame = new Frame(sim);
+            Frame2D frame = new Frame2D(sim);
         } catch (NoModeSelectedException ex) {
             System.out.println(ex);
         }

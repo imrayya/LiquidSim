@@ -18,7 +18,7 @@
 package sim.emitter;
 
 import sim.Simulation;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
@@ -29,13 +29,13 @@ public abstract class Emitter {
 
     private Simulation sim;
 
-    private Position position;
+    private Position2D position;
 
     private double size;
 
     private double spacing;
 
-    public Emitter(Simulation sim, Position position, double size, double spacing) {
+    public Emitter(Simulation sim, Position2D position, double size, double spacing) {
         this.sim = sim;
         this.position = position;
         this.size = size;
@@ -103,7 +103,7 @@ public abstract class Emitter {
      *
      * @return the value of position
      */
-    public Position getPosition() {
+    public Position2D getPosition() {
         return position;
     }
 
@@ -112,7 +112,7 @@ public abstract class Emitter {
      *
      * @param position new value of position
      */
-    public void setPosition(Position position) {
+    public void setPosition(Position2D position) {
         this.position = position;
     }
 

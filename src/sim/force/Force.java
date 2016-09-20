@@ -17,7 +17,7 @@
  */
 package sim.force;
 
-import sim.angle.Angle;
+import sim.shape.angle.Angle;
 
 /**
  *

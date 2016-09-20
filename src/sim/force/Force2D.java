@@ -17,7 +17,10 @@
  */
 package sim.force;
 
-import sim.angle.Angle;
+import java.util.Arrays;
+import sim.shape.Line2D;
+import sim.shape.angle.Angle;
+import sim.shape.position.Position2D;
 
 /**
  *
@@ -46,22 +49,7 @@ public class Force2D extends Force {
     }
 
     public Angle angle() {
-        if (Math.signum(getVector(0)) == 1 && Math.signum(getVector(1)) == 1) {
-            return new Angle(Math.atan(getVector(1) / getVector(0)));
-        }
-
-        if (Math.signum(getVector(0)) == -1 && Math.signum(getVector(1)) == 1) {
-            return new Angle(Math.atan(getVector(1) / getVector(0)) + 2 * Math.PI);
-        }
-
-        if (Math.signum(getVector(0)) == -1 && Math.signum(getVector(1)) == -1) {
-            return new Angle(Math.atan(getVector(1) / getVector(0)) + Math.PI);
-        }
-
-        if (Math.signum(getVector(0)) == 1 && Math.signum(getVector(1)) == -1) {
-            return new Angle(Math.atan(getVector(1) / getVector(0)) + Math.PI);
-        }
-        return new Angle(0);
+        return getLineRepresentation().getAngleComplicated();
     }
 
     @Override
@@ -82,14 +70,18 @@ public class Force2D extends Force {
         System.out.println(f);
     }
 
+    private Line2D getLineRepresentation() {
+        return new Line2D(new Position2D(), new Position2D(getVector(0), getVector(1)));
+    }
+
     @Override
     public Force reflect(double e, Angle a) {
+        //Old version
         double h = Math.sqrt(Math.pow(getVector(0), 2) + Math.pow(getVector(1), 2));
-        System.out.println(h);
+//        System.out.println(h);
         return new Force2D(new double[]{
-            h * Math.sin(2 * Math.PI - a.getX()) * e,
-            h * Math.cos(2 * Math.PI - a.getX()) * e});
-
+            h * Math.sin(a.getX()) * e,
+            h * Math.cos(a.getX()) * e});
     }
 
 }

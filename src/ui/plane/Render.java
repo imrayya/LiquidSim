@@ -20,13 +20,13 @@ package ui.plane;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import sim.GlobalSetting;
 import sim.Simulation;
-import sim.collider.Collider2Drect;
+import sim.collider.Collider2D_Rect;
 import sim.partical.Partical2Dsimple;
+import sim.shape.Line2D;
+import sim.shape.Rect2D;
 import ui.RenderInterface;
 
 /**
@@ -52,7 +52,7 @@ public class Render implements RenderInterface {
             g.setColor(new Color((int) (next.getTemperature() / next.getBoilingPoint()) * 255, 0, 0));
             g.fill(new Ellipse2D.Double(
                     next.getPosition().getX() - GlobalSetting.getParticalSize() / 2,
-                    next.getPosition().getY() - GlobalSetting.getParticalSize() / 2,
+                    g.getClip().getBounds().height - next.getPosition().getY() - GlobalSetting.getParticalSize() / 2,
                     GlobalSetting.getParticalSize(),
                     GlobalSetting.getParticalSize())
             );
@@ -63,12 +63,14 @@ public class Render implements RenderInterface {
 //                    next.getPosition().getX() + next.getForce().getVector(0),
 //                    next.getPosition().getY() + next.getForce().getVector(1)));
         }
-        Iterator<Collider2Drect> t = SIM.getCONTAINER().getIteratorC();
+        Iterator<Collider2D_Rect> t = SIM.getCONTAINER().getIteratorC();
         g.setColor(Color.black);
 
         while (t.hasNext()) {
-            Rectangle2D next = t.next().getRect();
-            g.draw(next);
+            Rect2D next = t.next().getRect();
+            for (Line2D line : next.renderLines(g.getClip().getBounds().getHeight())) {
+                line.draw(g);
+            }
         }
 
     }

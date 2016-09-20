@@ -18,9 +18,9 @@
 package sim.partical;
 
 import java.util.List;
-import sim.angle.Angle;
+import sim.shape.angle.Angle;
 import sim.collider.Collider;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 import sim.force.Force;
 
 /**
@@ -41,9 +41,9 @@ public abstract class Partical {
 
     private double freezingPoint = 273.15;
 
-    private Position position;
+    private Position2D position;
 
-    private Position predictedPosition;
+    private Position2D predictedPosition;
 
     private Force force;
 
@@ -77,11 +77,11 @@ public abstract class Partical {
         this.kill = kill;
     }
 
-    protected void setPredicted(Position p) {
+    protected void setPredicted(Position2D p) {
         predictedPosition = p;
     }
 
-    public Position getPredicted() {
+    public Position2D getPredicted() {
         return predictedPosition;
     }
 
@@ -90,7 +90,7 @@ public abstract class Partical {
      *
      * @return the value of position
      */
-    public Position getPosition() {
+    public Position2D getPosition() {
         return position;
     }
 
@@ -99,7 +99,7 @@ public abstract class Partical {
      *
      * @param position new value of position
      */
-    public void setPosition(Position position) {
+    public void setPosition(Position2D position) {
         this.position = position;
     }
 
@@ -220,19 +220,14 @@ public abstract class Partical {
         return externalForce;
     }
 
-    /**
-     * Set the value of externalForce (adds)
-     *
-     * @param externalForce new value of externalForce
-     */
-    public void setExternalForce(Force externalForce) {
-        this.externalForce = this.externalForce.add(externalForce);
-    }
-
     public abstract void resetExternalForce();
 
-    public void setExternalForceR(Force externalForce) {
+    public void setExternalForce(Force externalForce) {
         this.externalForce = externalForce;
+    }
+
+    public void addToExternalForce(Force externalForce) {
+        this.externalForce = this.externalForce.add(externalForce);
     }
 
     /**

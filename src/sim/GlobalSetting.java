@@ -27,12 +27,36 @@ public class GlobalSetting {
 
     public static final int PLANER = 1;
     public static final int SPACE = 2;
+
     private static int calculationMode = 0;
-    private static Long deltaT = 16l;
-    private static double gravity =-9.81;
+
+    //How long each tick represents in seconds
+    private static double deltaT = 1d / 10d;
+    //How long a tick is (the time between ticks)
+    private static long tickLength = 20;
+
+
+    private static double gravity = -9.81;
+
     private static int particalSize;
     private static int height = 800;
     private static int width = 800;
+    /**
+     * Get the value of tickLength
+     *
+     * @return the value of tickLength
+     */
+    public static long getTickLength() {
+        return tickLength;
+    }
+    /**
+     * Set the value of tickLength
+     *
+     * @param tickLength new value of tickLength
+     */
+    public static void setTickLength(long tickLength) {
+        GlobalSetting.tickLength = tickLength;
+    }
 
     /**
      * Get the value of height
@@ -101,7 +125,7 @@ public class GlobalSetting {
      *
      * @return the value of deltaT
      */
-    public static Long getDeltaT() {
+    public static double getDeltaT() {
         return deltaT;
     }
 
@@ -110,7 +134,7 @@ public class GlobalSetting {
      *
      * @param deltaT new value of deltaT
      */
-    public static void setDeltaT(Long deltaT) {
+    public static void setDeltaT(double deltaT) {
         GlobalSetting.deltaT = deltaT;
     }
 

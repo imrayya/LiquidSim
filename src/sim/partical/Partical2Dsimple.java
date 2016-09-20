@@ -21,9 +21,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import sim.GlobalSetting;
 import sim.collider.Collider;
-import sim.force.Force;
 import sim.force.Force2D;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
@@ -31,23 +30,23 @@ import sim.position.Position;
  */
 public class Partical2Dsimple extends Partical {
 
-    public Partical2Dsimple(Position p) {
+    public Partical2Dsimple(Position2D p) {
         this.setPosition(p);
-        setPredicted(new Position());
+        setPredicted(new Position2D());
         resetExternalForce();
     }
 
     @Override
     public void setPredicted() {
         predictForce();
-        Position tmp = new Position();
-        tmp.setX(getPosition().getX() + getForce().multi(GlobalSetting.getDeltaT().doubleValue() / 1000).getVector(0));
-        tmp.setY(getPosition().getY() + getForce().multi(GlobalSetting.getDeltaT().doubleValue() / 1000).getVector(1));
+        Position2D tmp = new Position2D();
+        tmp.setX(getPosition().getX() + getForce().multi(GlobalSetting.getDeltaT()).getVector(0));
+        tmp.setY(getPosition().getY() + getForce().multi(GlobalSetting.getDeltaT()).getVector(1));
         setPredicted(tmp);
     }
 
     @Override
-    public void setPosition(Position position) {
+    public void setPosition(Position2D position) {
         if (position.getX() > GlobalSetting.getWidth()
                 || position.getY() > GlobalSetting.getHeight()) {
             setKill(true);
@@ -61,20 +60,17 @@ public class Partical2Dsimple extends Partical {
 
         Gravity:
         {
-            f.setVector(1, f.getVector(1) + (getMass() * (-GlobalSetting.getGravity() * (GlobalSetting.getDeltaT().doubleValue() / 1000))));
+            f.setVector(1, f.getVector(1) + (getMass() * (GlobalSetting.getGravity() * (GlobalSetting.getDeltaT() ))));
         }
 
-        ExternalForce:
-        {
-
-//            f = (Force2D) (f.add(getExternalForce()));
-        }
-        setForce(f);
+        //Has nothing else as it is the simple version
+        setExternalForce(f);
     }
 
     @Override
     public void handleCollision(Collider c) {
-        setForce(getForce().reflect(c.getElasticity(),c.getAngle(this)));
+        setForce(getForce().reflect(c.getElasticity(), c.getAngle(this)));
+        
     }
 
     @Override
@@ -100,15 +96,15 @@ public class Partical2Dsimple extends Partical {
                 getPosition().getY() - GlobalSetting.getParticalSize() / 2,
                 GlobalSetting.getParticalSize(),
                 GlobalSetting.getParticalSize()).intersects(new Rectangle2D.Double(
-                                p.getPosition().getX() - GlobalSetting.getParticalSize() / 2,
-                                p.getPosition().getY() - GlobalSetting.getParticalSize() / 2,
-                                GlobalSetting.getParticalSize(),
-                                GlobalSetting.getParticalSize()));
+                p.getPosition().getX() - GlobalSetting.getParticalSize() / 2,
+                p.getPosition().getY() - GlobalSetting.getParticalSize() / 2,
+                GlobalSetting.getParticalSize(),
+                GlobalSetting.getParticalSize()));
     }
 
     @Override
     public void resetExternalForce() {
-        setExternalForceR(new Force2D(new double[]{0, 0}));
+        setExternalForce(new Force2D(new double[]{0, 0}));
     }
 
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 import sim.collider.Collider;
-import sim.collider.Collider2Drect;
+import sim.collider.Collider2D_Rect;
 import sim.partical.Partical;
 
 /**
@@ -39,10 +39,11 @@ public class ParticalHolder {
         this.PARTICLES = new Stack<>();
         this.TO_BE_ADDED = new Stack<>();
         this.COLLIDERS = new Stack<>();
-        COLLIDERS.add(new Collider2Drect(0, 700, 740, 40, 1));
-        COLLIDERS.add(new Collider2Drect(0, 0, 40, 700, 1));
-        COLLIDERS.add(new Collider2Drect(740, 0, 40, 740, 1));
-        COLLIDERS.add(new Collider2Drect(40, 0, 700, 40, 1));
+        COLLIDERS.add(new Collider2D_Rect(0, 100, 100, 100));
+        COLLIDERS.add(new Collider2D_Rect(0, 700, 740, 40, 1));
+        COLLIDERS.add(new Collider2D_Rect(0, 0, 40, 700, 1));
+        COLLIDERS.add(new Collider2D_Rect(740, 0, 40, 740, 1));
+        COLLIDERS.add(new Collider2D_Rect(40, 0, 700, 40, 1));
 
     }
 

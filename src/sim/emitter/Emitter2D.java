@@ -21,7 +21,7 @@ import java.util.Random;
 import sim.Simulation;
 import sim.force.Force2D;
 import sim.partical.Partical2Dsimple;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
@@ -30,7 +30,7 @@ import sim.position.Position;
  */
 public class Emitter2D extends Emitter {
 
-    public Emitter2D(Simulation sim, Position position, double size, double spacing) {
+    public Emitter2D(Simulation sim, Position2D position, double size, double spacing) {
         super(sim, position, size, spacing);
     }
 
@@ -38,7 +38,7 @@ public class Emitter2D extends Emitter {
     public void create() {
         for (double i = getPosition().getX() - getSize() / 2; i < getPosition().getX() + getSize() / 2; i += getSpacing()) {
             for (double j = getPosition().getY() - getSize() / 2; j < getPosition().getY() + getSize() / 2; j += getSpacing()) {
-                Partical2Dsimple p = new Partical2Dsimple(new Position(i, j));
+                Partical2Dsimple p = new Partical2Dsimple(new Position2D(i, j));
                 Random r = new Random();
                 double x = r.nextDouble();
                 double y = r.nextDouble();
@@ -54,7 +54,7 @@ public class Emitter2D extends Emitter {
                     y = 1;
                 }
 
-                p.setForce(new Force2D(new double[]{x*r.nextInt(10000) * 0.01, y*r.nextInt(10000) * 0.01}));
+                p.setForce(new Force2D(new double[]{x * r.nextInt(10000) * 0.01, y * r.nextInt(10000) * 0.01}));
                 getSim().getCONTAINER().addPartical(p);
             }
         }

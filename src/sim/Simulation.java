@@ -24,18 +24,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import sim.collider.Collider;
 import sim.partical.Partical;
 
 /**
  *
  * @author Kareem Horstink
- * @version 0.1
+ * @version 0.11
  */
 public class Simulation extends Observable {
 
+    public static int tick = 0;
+    public boolean processing = false;
     private final ParticalHolder CONTAINER;
     private boolean pause = false;
     private final Timer TIMER;
@@ -48,9 +48,14 @@ public class Simulation extends Observable {
 
             @Override
             public void run() {
-                simulationLoop();
+                if (!processing) {
+                    simulationLoop();
+                } else {
+                    System.out.println("still processing: " + tick);
+                }
+                tick++;
             }
-        }, 0, GlobalSetting.getDeltaT());
+        }, 0, GlobalSetting.getTickLength());
 
     }
 
@@ -59,7 +64,7 @@ public class Simulation extends Observable {
     }
 
     private void simulationLoop() {
-
+        processing = true;
         if (!pause) {
             //Sets the predicted location based on previous tick
             Iterator<Partical> i = CONTAINER.getIteratorP();
@@ -82,27 +87,17 @@ public class Simulation extends Observable {
             }
 
             //Handles collision with particulas
-            i = CONTAINER.getIteratorP();
-            while (i.hasNext()) {
-                Partical partical1 = i.next();
-                Iterator<Partical> j = CONTAINER.getIteratorP();
-                while (j.hasNext()) {
-                    Partical partical2 = j.next();
-                    if (partical1 != partical2 && partical1.detectCollision(partical2)) {
-                        partical1.handleCollision(partical2);
-                    }
-                }
-            }
-
-            //sets the new predicted location
-            //resets the external forces on the object
-            i = CONTAINER.getIteratorP();
-            while (i.hasNext()) {
-                Partical partical = i.next();
-                partical.setPredicted();
-                partical.resetExternalForce();
-            }
-
+//            i = CONTAINER.getIteratorP();
+//            while (i.hasNext()) {
+//                Partical partical1 = i.next();
+//                Iterator<Partical> j = CONTAINER.getIteratorP();
+//                while (j.hasNext()) {
+//                    Partical partical2 = j.next();
+//                    if (partical1 != partical2 && partical1.detectCollision(partical2)) {
+//                        partical1.handleCollision(partical2);
+//                    }
+//                }
+//            }
             i = CONTAINER.getIteratorP();
             while (i.hasNext()) {
                 Partical next = i.next();
@@ -111,6 +106,16 @@ public class Simulation extends Observable {
                     toBeRomeved.add(next);
                 }
             }
+
+            //resets the external forces on the object
+            i = CONTAINER.getIteratorP();
+            while (i.hasNext()) {
+                Partical partical = i.next();
+                if (!partical.isKill()) {
+                    partical.resetExternalForce();
+                }
+            }
+
             for (int j = 0; j < toBeRomeved.size(); j++) {
                 try {
                     CONTAINER.removePartical(toBeRomeved.take());
@@ -122,6 +127,7 @@ public class Simulation extends Observable {
             setChanged();
             notifyObservers();
         }
+        processing = false;
     }
 
     protected List<Partical> findNeibours(Partical p) {

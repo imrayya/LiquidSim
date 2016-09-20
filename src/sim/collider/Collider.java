@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Imray
+ * Copyright (C) 2015 Kareem Horstink
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,13 +17,13 @@
  */
 package sim.collider;
 
-import sim.angle.Angle;
+import sim.shape.angle.Angle;
 import sim.partical.Partical;
-import sim.position.Position;
+import sim.shape.position.Position2D;
 
 /**
  *
- * @author Imray
+ * @author Kareem Horstink
  */
 public abstract class Collider {
 
@@ -36,7 +36,7 @@ public abstract class Collider {
      *
      * @return the value of elasticity
      */
-    public double getElasticity() {
+    public final double getElasticity() {
         return elasticity;
     }
 
@@ -45,9 +45,9 @@ public abstract class Collider {
      *
      * @param elasticity new value of elasticity
      */
-    public void setElasticity(double elasticity) {
+    public final void setElasticity(double elasticity) {
         this.elasticity = elasticity;
     }
 
-    public abstract boolean contains(Position p);
+    public abstract boolean contains(Position2D p);
 }
